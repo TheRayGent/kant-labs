@@ -1,8 +1,9 @@
-//Это шаблон
 #include <iostream>
 using namespace std;
 
 int main() {
-    cout << "Nenavigu teoriu";
+    int x, i;
+    cin >> x >> i;
+    cout << (x >> i & 1);
     return 0;
 }
