@@ -14,7 +14,7 @@ void write(int** Mas, int n)
 
 bool ifmax(int* mas_string, int j, int n){
     for (int i = 0; i<n; i++)
-        if  (mas_string[j] < mas_string[n]) return false;
+        if  (mas_string[j] < mas_string[i]) return false;
     return true;
 }
 
