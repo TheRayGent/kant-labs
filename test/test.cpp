@@ -12,7 +12,7 @@ private:
     };
 public:
     Node * sent;
-    
+
     // Adding a node to the end of a list
     int append(int data){
         Node * last = sent->prev;
@@ -64,15 +64,6 @@ public:
         }
         list+="]";
         return list;
-    }
-
-    // Deleting a list node by pointer
-    void remove(Node * node){
-        if(node == sent) return;
-
-        node->prev->next = node->next;
-        node->next->prev = node->prev;
-        delete node;
     }
 
     
