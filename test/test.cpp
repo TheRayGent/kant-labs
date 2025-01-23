@@ -12,8 +12,7 @@ private:
     };
 public:
     Node * sent;
-
-
+    
     // Adding a node to the end of a list
     int append(int data){
         Node * last = sent->prev;
@@ -80,6 +79,6 @@ public:
 };
 
 int main(){
-    MyList a;
+    MyList a = {1, 2, 3};
     cout << a.getList();
 }
