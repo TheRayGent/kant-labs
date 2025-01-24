@@ -88,9 +88,6 @@ public:
             
         if(index < 0) 
             index = len+index;
-        
-        // if(index >= len || index < -len)
-        //     #error "Error: list index out of range"
 
         if(len/2 >= index+1){
             for(int i = 0; i <= index; i++)
