@@ -100,7 +100,6 @@ public:
         }
         return node->data;
     }
-
 };
 
 int main() {
