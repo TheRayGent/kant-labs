@@ -16,6 +16,8 @@ private:
 
     Node *sent;
 
+    int _len = 0;
+
     void deleteNode(Node *node)
     {
         if (node == sent)
@@ -23,19 +25,16 @@ private:
         node->prev->next = node->next;
         node->next->prev = node->prev;
         delete node;
-        len--;
+        _len--;
     }
 
     void addNodesFromList(const MyList &list)
     {
-        for (int i = 0; i < list.len; i++)
+        for (int i = 0; i < list._len; i++)
             append(list[i]);
     }
 
 public:
-    //
-    int len = 0;
-
     MyList(initializer_list<int> list = {}) : sent(new Node)
     {
         sent->next = sent;
@@ -102,6 +101,8 @@ public:
         delete sent;
     }
 
+    int len() { return _len; }
+
     // Adding a node to the end of a list
     int &append(int data)
     {
@@ -112,15 +113,15 @@ public:
         p->next = sent;
         sent->prev = p;
         last->next = p;
-        len++;
+        _len++;
         return p->data;
     }
 
     int &insert(int index, int data)
     {
-        _ASSERT_EXPR(!(index >= len || index < -len), L"index out of range");
+        _ASSERT_EXPR(!(index >= _len || index < -_len), L"index out of range");
         if (index < 0)
-            index = len + index;
+            index = _len + index;
 
         Node *prev = sent;
         for (int i = 0; i < index; i++)
@@ -131,7 +132,7 @@ public:
         p->next = prev->next;
         prev->next->prev = p;
         prev->next = p;
-        len++;
+        _len++;
         return p->data;
     }
 
@@ -145,7 +146,54 @@ public:
         }
         sent->next = sent;
         sent->prev = sent;
-        len = 0;
+        _len = 0;
+    }
+
+    int pop(int index = -1)
+    {
+        _ASSERT_EXPR(!(index >= _len || index < -_len), L"index out of range");
+        if (index < 0)
+            index = _len + index;
+        Node *node = sent->next;
+        for (int i = 0; i < index; i++)
+            node = node->next;
+        int data = node->data;
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+        delete node;
+        return data;
+    }
+
+    void erase(int index)
+    {
+        pop(index);
+    }
+
+    void erase(int index_begin, int index_end)
+    {
+        _ASSERT_EXPR(!(index_begin >= _len || index_begin < -_len), L"index out of range");
+        _ASSERT_EXPR(!(index_end >= _len || index_end < -_len), L"index out of range");
+        if (index_begin < 0)
+            index_begin = _len + index_begin;
+        if (index_end < 0)
+            index_end = _len + index_end;
+        if (index_begin == index_end)
+            return erase(index_begin);
+        if (index_begin > index_end)
+            swap(index_begin, index_end);
+        Node *node_begin = sent;
+        for (int i = 0; i < index_begin; i++)
+            node_begin = node_begin->next;
+        Node *node_end = sent->next;
+        for (int i = 0; i < index_end; i++)
+            node_end = node_end->next;
+        for (Node *i = node_begin->next; i != node_end;)
+        {
+            i = i->next;
+            delete i->prev;
+        }
+        node_begin->next = node_end;
+        node_end->prev = node_begin;
     }
 
     //
@@ -174,19 +222,38 @@ public:
     int &operator[](int index) const
     {
         Node *node = sent;
-        _ASSERT_EXPR(!(index >= len || index < -len), L"index out of range");
+        _ASSERT_EXPR(!(index >= _len || index < -_len), L"index out of range");
         if (index < 0)
-            index = len + index;
+            index = _len + index;
         if (index == 0)
             return node->next->data;
-        if (len / 2 >= index + 1)
+        if (_len / 2 >= index + 1)
             for (int i = 0; i <= index; i++)
                 node = node->next;
         else
-            for (int i = len - 1; i >= index; i--)
+            for (int i = _len - 1; i >= index; i--)
                 node = node->prev;
         return node->data;
     }
+
+    // Temporary Methods
+
+    int size() { return _len; }
+
+    int capacity() { return _len; }
+
+    bool empty()
+    {
+        if (sent->next == sent)
+            return true;
+        return false;
+    }
+
+    int &front() { return sent->next->data; }
+
+    int &back() { return sent->prev->data; }
+
+    int &push_back(int data = 1) { return append(data); }
 };
 
 std::ostream &operator<<(std::ostream &os, const MyList &list)
@@ -197,7 +264,8 @@ std::ostream &operator<<(std::ostream &os, const MyList &list)
 
 int main()
 {
-    MyList a = {1, 2, 3};
-    
-    cout << a[-4] << endl;
+    MyList a = {0, 1, 2, 3, 4,5,6,7};
+    cout << a << endl;
+    a.erase(1, 5);
+    cout << a << endl;
 }
