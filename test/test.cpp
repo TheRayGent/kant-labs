@@ -196,6 +196,28 @@ public:
         node_end->prev = node_begin;
     }
 
+    void resize(unsigned int newsize)
+    {
+        if (newsize == 0)
+        {
+            clear();
+            return;
+        }
+        if (newsize == _len)
+            return;
+        if (newsize < _len)
+        {
+            erase(newsize, _len);
+            return;
+        }
+        int a =  newsize - _len;
+        for (int i = 0; i < a; i++)
+        {
+            cout << i << endl;
+            append(0);
+        }
+    }
+
     //
     string toString() const
     {
@@ -253,7 +275,7 @@ public:
 
     int &back() { return sent->prev->data; }
 
-    int &push_back(int data = 1) { return append(data); }
+    int &push_back(int data) { return append(data); }
 };
 
 std::ostream &operator<<(std::ostream &os, const MyList &list)
@@ -264,7 +286,13 @@ std::ostream &operator<<(std::ostream &os, const MyList &list)
 
 int main()
 {
-    MyList a = {0, 1, 2, 3, 4,5,6,7};
+    MyList a = {0, 1, 2, 3, 4, 5, 6, 7};
+    cout << a << endl;
+    a.append(8);
+    cout << a << endl;
+    a.insert(5, 9);
+    cout << a << endl;
+    a.resize(15);
     cout << a << endl;
     a.erase(1, 5);
     cout << a << endl;
