@@ -57,39 +57,52 @@ public:
         return *this;
     }
 
-    MyList &operator+=(const MyList &list)
-    {
-        addNodesFromList(list);
-        return *this;
-    }
+    // MyList &operator+=(const MyList &list)
+    // {
+    //     addNodesFromList(list);
+    //     return *this;
+    // }
 
-    MyList operator+(const MyList &list)
-    {
-        MyList tmp = *this;
-        tmp += list;
-        return tmp;
-    }
+    // MyList &operator+=(int data)
+    // {
+    //     append(data);
+    //     return *this;
+    // }
 
-    MyList operator*=(const unsigned int factor)
-    {
-        if (factor == 0)
-        {
-            clear();
-            return *this;
-        }
-        MyList tmp = *this;
-        if (factor > 1)
-            for (int i = 0; i < factor - 1; i++)
-                addNodesFromList(tmp);
-        return *this;
-    }
+    // MyList operator+(const MyList &list)
+    // {
+    //     MyList tmp = *this;
+    //     tmp += list;
+    //     return tmp;
+    // }
 
-    MyList operator*(const unsigned int factor)
-    {
-        MyList tmp = *this;
-        tmp *= factor;
-        return tmp;
-    }
+    // MyList operator+(int data)
+    // {
+    //     MyList tmp = *this;
+    //     tmp += data;
+    //     return tmp;
+    // }
+
+    // MyList operator*=(const unsigned int factor)
+    // {
+    //     if (factor == 0)
+    //     {
+    //         clear();
+    //         return *this;
+    //     }
+    //     MyList tmp = *this;
+    //     if (factor > 1)
+    //         for (int i = 0; i < factor - 1; i++)
+    //             addNodesFromList(tmp);
+    //     return *this;
+    // }
+
+    // MyList operator*(const unsigned int factor)
+    // {
+    //     MyList tmp = *this;
+    //     tmp *= factor;
+    //     return tmp;
+    // }
 
     ~MyList()
     {
@@ -210,12 +223,9 @@ public:
             erase(newsize, _len);
             return;
         }
-        int a =  newsize - _len;
+        int a = newsize - _len;
         for (int i = 0; i < a; i++)
-        {
-            cout << i << endl;
             append(0);
-        }
     }
 
     //
@@ -276,6 +286,63 @@ public:
     int &back() { return sent->prev->data; }
 
     int &push_back(int data) { return append(data); }
+
+    MyList &operator+=(const MyList &list)
+    {
+        if (list._len != (*this)._len)
+            return *this;
+        for (int i = 0; i < list._len; i++)
+            (*this)[i] += list[i];
+        return *this;
+    }
+
+    MyList operator+(const MyList &list)
+    {
+        MyList tmp = *this;
+        tmp += list;
+        return tmp;
+    }
+
+    MyList &operator-=(const MyList &list)
+    {
+        if (list._len != (*this)._len)
+            return *this;
+        for (int i = 0; i < list._len; i++)
+            (*this)[i] -= list[i];
+        return *this;
+    }
+
+    MyList operator-(const MyList &list)
+    {
+        MyList tmp = *this;
+        tmp -= list;
+        return tmp;
+    }
+
+    MyList operator*=(int factor)
+    {
+        for (int i = 0; i < (*this)._len; i++)
+            (*this)[i] *= factor;
+        return *this;
+    }
+
+    MyList operator*(int factor)
+    {
+        MyList tmp = *this;
+        tmp*=factor;
+        return tmp;
+    }
+
+    int operator *(const MyList &list)
+    {
+        if (list._len != (*this)._len)
+            return 0;
+        int result = 0;
+        for (int i = 0; i < this->_len; i++){
+            result += (*this)[i] * list[i];
+        }
+        return result;
+    }
 };
 
 std::ostream &operator<<(std::ostream &os, const MyList &list)
@@ -286,14 +353,8 @@ std::ostream &operator<<(std::ostream &os, const MyList &list)
 
 int main()
 {
-    MyList a = {0, 1, 2, 3, 4, 5, 6, 7};
+    MyList a = {3, 1, 2, 3};
     cout << a << endl;
-    a.append(8);
-    cout << a << endl;
-    a.insert(5, 9);
-    cout << a << endl;
-    a.resize(15);
-    cout << a << endl;
-    a.erase(1, 5);
-    cout << a << endl;
+    MyList b = {4, 5, 6};
+    cout << a*5;
 }
