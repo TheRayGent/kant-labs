@@ -168,7 +168,7 @@ void dublenodes(Node* sent){
 }
 
 int main() {
-    setlocale(LC_ALL, "Russian");
+    char *locale = setlocale(LC_ALL, "");
 
     Node * sent = new Node;
     sent->data = -1;
@@ -176,16 +176,16 @@ int main() {
     sent->prev = sent;
 
     int n;
-    cout << "Ââåäèòå êîë-âî ıëåìåíòîâ ïîñëåäîâàòåëüíîñòè: ";
+    cout << "Ğ’Ğ²ĞµĞ´Ğ¸Ñ‚Ğµ ĞºĞ¾Ğ»-Ğ²Ğ¾ ÑĞ»ĞµĞ¼ĞµĞ½Ñ‚Ğ¾Ğ² Ğ¿Ğ¾ÑĞ»ĞµĞ´Ğ¾Ğ²Ğ°Ñ‚ĞµĞ»ÑŒĞ½Ğ¾ÑÑ‚Ğ¸: ";
     cin >> n;
-    cout << "Ââåäèòå ïîñëåäîâàòåëüíîñòü (ìîæíî ÷åğåç ïğîáåë): ";
+    cout << "Ğ’Ğ²ĞµĞ´Ğ¸Ñ‚Ğµ Ğ¿Ğ¾ÑĞ»ĞµĞ´Ğ¾Ğ²Ğ°Ñ‚ĞµĞ»ÑŒĞ½Ğ¾ÑÑ‚ÑŒ (Ğ¼Ğ¾Ğ¶Ğ½Ğ¾ Ñ‡ĞµÑ€ĞµĞ· Ğ¿Ñ€Ğ¾Ğ±ĞµĞ»): ";
 
     for(int i = 0, data; i<n; i++){
         cin >> data;
         nodeappend(sent, data);
     }
 
-    cout << "Èçíà÷àëüíàÿ ïîñëåäîâàòåëüíîñòü: ";
+    cout << "Ğ˜Ğ·Ğ½Ğ°Ñ‡Ğ°Ğ»ÑŒĞ½Ğ°Ñ Ğ¿Ğ¾ÑĞ»ĞµĞ´Ğ¾Ğ²Ğ°Ñ‚ĞµĞ»ÑŒĞ½Ğ¾ÑÑ‚ÑŒ: ";
     nodeprint(sent);
 
     if(issortedleft(sent) || issortedright(sent)){
@@ -195,7 +195,7 @@ int main() {
     else 
         nodesort(sent, true);
 
-    cout << "Èòîãîâàÿ ïîñëåäîâàòåëüíîñòü: ";
+    cout << "Ğ˜Ñ‚Ğ¾Ğ³Ğ¾Ğ²Ğ°Ñ Ğ¿Ğ¾ÑĞ»ĞµĞ´Ğ¾Ğ²Ğ°Ñ‚ĞµĞ»ÑŒĞ½Ğ¾ÑÑ‚ÑŒ: ";
     nodeprint(sent);
 
     nodeclear(sent);

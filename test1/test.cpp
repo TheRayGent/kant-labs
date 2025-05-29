@@ -1,8 +1,10 @@
 #include <SFML/Graphics.hpp>
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 8;
+    sf::RenderWindow window(sf::VideoMode(500, 500), "SFML works!", 7U, settings);
+    sf::CircleShape shape(200.f);
     shape.setFillColor(sf::Color::Green);
 
     while (window.isOpen())
